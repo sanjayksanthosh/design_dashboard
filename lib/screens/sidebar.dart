@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hidden_dash_new/screens/profilePage.dart';
 import 'package:hidden_dash_new/utils/colors.dart';
 import 'package:hidden_dash_new/utils/media_query_values.dart';
 
-
-
 class SideBar extends StatefulWidget {
-  const SideBar({
-    super.key,
-  });
+  const SideBar({super.key});
 
   @override
   State<SideBar> createState() => _SideBarState();
@@ -22,6 +19,7 @@ class _SideBarState extends State<SideBar> {
     Icons.message,
     Icons.person,
   ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,9 +38,9 @@ class _SideBarState extends State<SideBar> {
                 border: Border.all(width: 4.0, color: primaryColor),
               ),
             ),
-            SizedBox(
-              height: context.height * 0.09,
-            ),
+            // SizedBox(
+            //   height: context.height *0.05,
+            // ),
             ..._icons
                 .map(
                   (icon) => _customIcon(
@@ -138,9 +136,20 @@ class _SideBarState extends State<SideBar> {
   Padding _customIcon(IconData icon, int index) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
-      child: Icon(
-        icon,
-        color: index == 1 ? Colors.white : darkGrey.withOpacity(0.6),
+      child: IconButton(
+        onPressed: () {
+          // Open Profilepage as a pop-up (dialog)
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                backgroundColor: Colors.transparent,
+                child: Profilepage(),
+              );
+            },
+          );
+        },
+        icon: Icon(icon),
       ),
     );
   }
