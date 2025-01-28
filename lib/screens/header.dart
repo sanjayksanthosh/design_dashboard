@@ -52,9 +52,7 @@ class Header extends StatelessWidget {
               SizedBox(
                 width: context.width * 0.01,
               ),
-              const Icon(
-                Icons.mic,
-              ),
+            
               SizedBox(
                 width: context.width * 0.01,
               ),
