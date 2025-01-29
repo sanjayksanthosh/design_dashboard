@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_dash_new/dashboardtest.dart';
 import 'package:hidden_dash_new/screens/homescreen.dart';
+import 'package:hidden_dash_new/screens/registrationPage.dart';
+import 'package:hidden_dash_new/screens/searchUserPage.dart';
 
 import 'utils/colors.dart';
 // import 'view/screens/home_screen.dart';
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(useMaterial3: true).copyWith(
         scaffoldBackgroundColor: darkBlack,
       ),
+      // home: RegistrationForm(),
       home: HomeScreenNew(),
     );
   }

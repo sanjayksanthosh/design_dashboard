@@ -101,233 +101,250 @@ class _ProfilepageState extends State<Profilepage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Container(
-              margin: EdgeInsets.all(10),
-              width: context.width / 1.2,
-              height: context.height / 1.2,
-              padding: const EdgeInsets.symmetric(
-                vertical: 16.0,
-                horizontal: 22.0,
-              ),
-              decoration: BoxDecoration(
-                color: lightBlack,
-                borderRadius: BorderRadius.circular(25.0),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Personal Details",
-                      style: TextStyle(fontSize: 40),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
+            child: Stack(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(10),
+                  width: context.width / 1.2,
+                  height: context.height / 1.2,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16.0,
+                    horizontal: 22.0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: lightBlack,
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 300,
-                              width: context.width / 5,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                            ),
-                            SizedBox(width: 50),
-                            Column(
-                              children: [
-                                Profiletext(
-                                  title: "name",
-                                  content: "samad aksdal",
-                                ),
-                                Profiletext(
-                                  title: "userId",
-                                  content: "A10293",
-                                ),
-                                Profiletext(
-                                  title: "Phone",
-                                  content: "392019301",
-                                ),
-                                Profiletext(
-                                  title: "emiratesIdNo",
-                                  content: "3298329832",
-                                ),
-                                Profiletext(
-                                  title: "Country",
-                                  content: "India",
-                                ),
-                              ],
-                            ),
-                          ],
+                        const Text(
+                          "Personal Details",
+                          style: TextStyle(fontSize: 40),
                         ),
-                        Container(
-                          height: context.height / 2,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 20),
-                                height: 200,
-                                width: 350,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(25),
+                        SizedBox(height: 10),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  height: 300,
+                                  width: context.width / 5,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: context.width / 4,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                SizedBox(width: 50),
+                                Column(
                                   children: [
-                                    Container(
-                                      width: 150,
-
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.blueAccent),
-                                        borderRadius: BorderRadius.circular(20),
-                                        // color: const Color.fromARGB(255, 54, 105, 244),
-                                      ),
-                                      padding: EdgeInsets.all(10),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            child: Text("Freeze"),
-                                          ),
-                                          Icon(Icons.warning_amber_outlined)
-                                        ],
-                                      ),
+                                    Profiletext(
+                                      title: "name",
+                                      content: "samad aksdal",
                                     ),
-                                    Container(
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Colors.redAccent),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      // color: Colors.red),
-                                      padding: EdgeInsets.all(10),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            child: Text("Block"),
-                                          ),
-                                          Icon(Icons.block)
-
-                                        ],
-                                      ),
+                                    Profiletext(
+                                      title: "userId",
+                                      content: "A10293",
+                                    ),
+                                    Profiletext(
+                                      title: "Phone",
+                                      content: "392019301",
+                                    ),
+                                    Profiletext(
+                                      title: "emiratesIdNo",
+                                      content: "3298329832",
+                                    ),
+                                    Profiletext(
+                                      title: "Country",
+                                      content: "India",
                                     ),
                                   ],
                                 ),
+                              ],
+                            ),
+                            Container(
+                              height: context.height / 2,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(horizontal: 20),
+                                    height: 200,
+                                    width: 350,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: context.width / 4,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          width: 150,
+                    
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.blueAccent),
+                                            borderRadius: BorderRadius.circular(20),
+                                            // color: const Color.fromARGB(255, 54, 105, 244),
+                                          ),
+                                          padding: EdgeInsets.all(10),
+                                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                child: Text("Freeze"),
+                                              ),
+                                              Icon(Icons.warning_amber_outlined)
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.redAccent),
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          // color: Colors.red),
+                                          padding: EdgeInsets.all(10),
+                                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                child: Text("Block"),
+                                              ),
+                                              Icon(Icons.block)
+                    
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        // Travel History Table
+                        Container(
+                          width: context.width,
+                          // height: 400,
+                          padding: EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "History",
+                                style: TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 200,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () => _onTabTapped(0),
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10.0, horizontal: 20.0),
+                                            decoration: BoxDecoration(
+                                              color: _selectedIndex == 0
+                                                  ? primaryColor
+                                                  : Colors.grey[300],
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                            child: Text(
+                                              'Recharges',
+                                              style: TextStyle(
+                                                color: _selectedIndex == 0
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () => _onTabTapped(1),
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10.0, horizontal: 20.0),
+                                            decoration: BoxDecoration(
+                                              color: _selectedIndex == 1
+                                                  ? primaryColor
+                                                  : Colors.grey[300],
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                            child: Text(
+                                              'Travels',
+                                              style: TextStyle(
+                                                color: _selectedIndex == 1
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      width: 400,
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                            suffixIcon: Icon(Icons.search),
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20))),
+                                      ))
+                                ],
+                              ),
+                              SizedBox(
+                                  height: 16.0), // Space between tabs and content
+                              Container(
+                                width: context.width,
+                                child: _selectedIndex == 0
+                                    ? _buildRechargeTable()
+                                    : _buildTravelTable(),
                               ),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    // Travel History Table
-                    Container(
-                      width: context.width,
-                      // height: 400,
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "History",
-                            style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 200,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () => _onTabTapped(0),
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 10.0, horizontal: 20.0),
-                                        decoration: BoxDecoration(
-                                          color: _selectedIndex == 0
-                                              ? primaryColor
-                                              : Colors.grey[300],
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                        ),
-                                        child: Text(
-                                          'Recharges',
-                                          style: TextStyle(
-                                            color: _selectedIndex == 0
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () => _onTabTapped(1),
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 10.0, horizontal: 20.0),
-                                        decoration: BoxDecoration(
-                                          color: _selectedIndex == 1
-                                              ? primaryColor
-                                              : Colors.grey[300],
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                        ),
-                                        child: Text(
-                                          'Travels',
-                                          style: TextStyle(
-                                            color: _selectedIndex == 1
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                  width: 400,
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        suffixIcon: Icon(Icons.search),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20))),
-                                  ))
-                            ],
-                          ),
-                          SizedBox(
-                              height: 16.0), // Space between tabs and content
-                          Container(
-                            width: context.width,
-                            child: _selectedIndex == 0
-                                ? _buildRechargeTable()
-                                : _buildTravelTable(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                Positioned(
+                  right: 30,
+                  top: 30,
+                  child: InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      child: Center(child: Icon(Icons.close,color: Colors.red,),),
+                      decoration: BoxDecoration(shape: BoxShape.circle,border: Border.all(color: Colors.white)),
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
         ],

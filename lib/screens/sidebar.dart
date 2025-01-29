@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hidden_dash_new/screens/homescreen.dart';
 import 'package:hidden_dash_new/screens/profilePage.dart';
+import 'package:hidden_dash_new/screens/registrationPage.dart';
+import 'package:hidden_dash_new/screens/searchUserPage.dart';
 import 'package:hidden_dash_new/utils/colors.dart';
 import 'package:hidden_dash_new/utils/media_query_values.dart';
 
@@ -13,10 +16,11 @@ class SideBar extends StatefulWidget {
 class _SideBarState extends State<SideBar> {
   final List<IconData> _icons = [
     Icons.data_exploration_rounded,
+    Icons.group_add_outlined,
+
     Icons.messenger,
     Icons.pie_chart_rounded,
     Icons.account_balance_wallet,
-    Icons.message,
     Icons.person,
   ];
 
@@ -133,24 +137,56 @@ class _SideBarState extends State<SideBar> {
     );
   }
 
-  Padding _customIcon(IconData icon, int index) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0),
-      child: IconButton(
-        onPressed: () {
-          // Open Profilepage as a pop-up (dialog)
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                backgroundColor: Colors.transparent,
-                child: Profilepage(),
-              );
-            },
-          );
-        },
-        icon: Icon(icon),
-      ),
-    );
-  }
+ Padding _customIcon(IconData icon, int index) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 20.0),
+    child: IconButton(
+      onPressed: () {
+        // Navigate to different pages based on the index
+        switch (index) {
+          case 0:
+            // Navigate to Dashboard
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return HomeScreenNew(); // Replace with your actual dashboard page
+            }));
+            break;
+          case 1:
+            // Navigate to Messages
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return RegistrationForm(); // Replace with your actual messages page
+            }));
+            break;
+          case 2:
+            // Navigate to Statistics
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return StatisticsPage(); // Replace with your actual statistics page
+            // }));
+            break;
+          case 3:
+            // Navigate to Wallet
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return WalletPage(); // Replace with your actual wallet page
+            // }));
+            break;
+          case 4:
+            // Navigate to Messages
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return MessagesPage(); // Replace with your actual messages page
+            // }));
+            break;
+          case 5:
+            // Navigate to Profile
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return UserSearchPage(); // Replace with your actual profile page
+            }));
+            break;
+          default:
+            // Handle default case if needed
+            break;
+        }
+      },
+      icon: Icon(icon),
+    ),
+  );
+}
 }
