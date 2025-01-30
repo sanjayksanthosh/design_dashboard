@@ -44,7 +44,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     child: Container(
                       width: context.width/1.5,
                       padding: EdgeInsets.all(30),
-                      transform: Matrix4.translationValues(0, -90, 0),
+                      transform: Matrix4.translationValues(0, -150, 0),
                       decoration: BoxDecoration(
                         color: lightBlack.withOpacity(0.9),
                         borderRadius: BorderRadius.circular(15.0),

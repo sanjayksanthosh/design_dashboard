@@ -20,6 +20,14 @@ class _UserSearchPageState extends State<UserSearchPage> {
       'phoneNumber': '1122334455'
     },
     {'userId': 'U126', 'fullName': 'Bob Brown', 'phoneNumber': '2233445566'},
+     {'userId': 'U123', 'fullName': 'John Doe', 'phoneNumber': '1234567890'},
+    {'userId': 'U124', 'fullName': 'Jane Smith', 'phoneNumber': '0987654321'},
+    {
+      'userId': 'U125',
+      'fullName': 'Alice Johnson',
+      'phoneNumber': '1122334455'
+    },
+    {'userId': 'U126', 'fullName': 'Bob Brown', 'phoneNumber': '2233445566'},
     // Add more users as needed
   ];
 
@@ -45,7 +53,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
                     child: Container(
                       width: context.width/1.3,
                       height: context.height,
-                      transform: Matrix4.translationValues(0, -90, 0),
+                      transform: Matrix4.translationValues(0, -150, 0),
                       padding: EdgeInsets.all(30),
                       decoration: BoxDecoration(
                         color: lightBlack.withOpacity(0.9),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_dash_new/dashboardtest.dart';
 import 'package:hidden_dash_new/screens/homescreen.dart';
+import 'package:hidden_dash_new/screens/new_reportPage.dart';
 import 'package:hidden_dash_new/screens/registrationPage.dart';
+import 'package:hidden_dash_new/screens/reportPage.dart';
 import 'package:hidden_dash_new/screens/searchUserPage.dart';
 
 import 'utils/colors.dart';
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: darkBlack,
       ),
       // home: RegistrationForm(),
-      home: HomeScreenNew(),
+      home: NewReportpage(),
     );
   }
 }
