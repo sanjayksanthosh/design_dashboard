@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_dash_new/dashboardtest.dart';
+import 'package:hidden_dash_new/screens/LogHistoryPage.dart';
 import 'package:hidden_dash_new/screens/homescreen.dart';
 import 'package:hidden_dash_new/screens/new_reportPage.dart';
 import 'package:hidden_dash_new/screens/registrationPage.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: darkBlack,
       ),
       // home: RegistrationForm(),
-      home: NewReportpage(),
+      home: HistoryPage(),
     );
   }
 }
