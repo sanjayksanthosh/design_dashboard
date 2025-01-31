@@ -25,48 +25,51 @@ class _HistoryPageState extends State<HistoryPage> {
               child: Column(
                 children: [
                   Header(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                    transform: Matrix4.translationValues(0, -150, 0),
-
-                      width: context.width / 1.3,
-                      height: 600, // Set a specific height for the container
-                      padding: EdgeInsets.all(30),
-                      decoration: BoxDecoration(
-                        color: lightBlack.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "History",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child:
+                          Container(
+                            width: context.width / 1.3,
+                            height: 600, // Set a specific height for the container
+                            padding: EdgeInsets.all(30),
+                            decoration: BoxDecoration(
+                              color: lightBlack.withOpacity(0.9),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "History",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 30),
+                                Row(
+                                  children: [
+                                    _buildPillButton("Travel History", 0),
+                                    _buildPillButton("Recharge History", 1),
+                                    _buildPillButton("Financial Transactions", 2),
+                                    _buildPillButton("Incidents", 3),
+                                  ],
+                                ),
+                                const SizedBox(height: 30),
+                                Expanded(
+                                  child: _getTabContent(),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 30),
-                          Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              _buildPillButton("Travel History", 0),
-                              _buildPillButton("Recharge History", 1),
-                              _buildPillButton("Financial Transactions", 2),
-                              _buildPillButton("Incidents", 3),
-                            ],
-                          ),
-                                                 const SizedBox(height: 30),
-
-                          Expanded(
-                            child: _getTabContent(),
-                          ),
-                        ],
-                      ),
+                          // Optional: Add a transparent container to capture taps
+                        
+                        
+                      
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -77,7 +80,8 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   Widget _buildPillButton(String title, int index) {
-    return Container(margin: EdgeInsets.symmetric(horizontal: 10),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
       child: ElevatedButton(
         onPressed: () {
           setState(() {
@@ -274,7 +278,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTableHeader(["User   ID", "In Time", "Date", "Bus No", "Staff", "Remaining Balance"]),
+        _buildTableHeader(["User    ID", "In Time", "Date", "Bus No", "Staff", "Remaining Balance"]),
         ...data.map((row) {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -356,7 +360,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTableHeader(["User   ID", "Date & Time", "Option", "Amount (AED)", "Payment Method", "Remarks"]),
+        _buildTableHeader(["User    ID", "Date & Time", "Option", "Amount (AED)", "Payment Method", "Remarks"]),
         ...data.map((row) {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -438,7 +442,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTableHeader(["Transaction ID", "Date & Time", "Type", "User   ID", "Amount (AED)", "Details"]),
+        _buildTableHeader(["Transaction ID", "Date & Time", "Type", "User    ID", "Amount (AED)", "Details"]),
         ...data.map((row) {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -515,7 +519,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTableHeader(["User   ID", "Type", "Timestamp", "Action"]),
+        _buildTableHeader(["User    ID", "Type", "Timestamp", "Action"]),
         ...data.map((row) {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -582,12 +586,24 @@ class _HistoryPageState extends State<HistoryPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: headers.map((header) {
-          return SizedBox(
-            width: 100, // Set a specific width for the header cell
-            child: Text(
-              header,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+          return GestureDetector(
+            onTap: () {
+              // Handle the tap event here
+              print("Header tapped: $header");
+            },
+            child: Container(
+              width: 100, // Set a specific width for the header cell
+              alignment: Alignment.center, // Center the text
+              padding: const EdgeInsets.symmetric(vertical: 12), // Add some vertical padding
+              decoration: BoxDecoration(
+                color: Colors.grey[800], // Background color for the header
+                borderRadius: BorderRadius.circular(8), // Rounded corners
+              ),
+              child: Text(
+                header,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              ),
             ),
           );
         }).toList(),
