@@ -30,6 +30,8 @@ class _HistoryPageState extends State<HistoryPage> {
                       padding: const EdgeInsets.all(16.0),
                       child:
                           Container(
+      transform: Matrix4.translationValues(0, -80, 0),
+
                             width: context.width / 1.3,
                             height: 600, // Set a specific height for the container
                             padding: EdgeInsets.all(30),

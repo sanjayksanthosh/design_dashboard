@@ -1,3 +1,5 @@
+import 'package:hidden_dash_new/screens/rechargePage.dart';
+
 import '../../utils/colors.dart';
 import '../../utils/media_query_values.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,11 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return RechargePage();
+        },));
+      },
       child: Container(
         width: width,
         height: context.height * 0.05,

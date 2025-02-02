@@ -13,7 +13,7 @@ class HomeScreenNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
+      body: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           const SideBar(),
           Expanded(
@@ -32,7 +32,7 @@ class HomeScreenNew extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const OverallPortfolioCard(),
-                                Container(width: context.width/1.5,
+                                Container(width: context.width/1.55,
                                   child: Row(crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -45,9 +45,9 @@ class HomeScreenNew extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(
-                            width: context.width * 0.023,
-                          ),
+                          // SizedBox(
+                          //   width: context.width * 0.023,
+                          // ),
                           const StockWidget(),
                         ],
                       ),

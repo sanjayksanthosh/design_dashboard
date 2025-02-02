@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: darkBlack,
       ),
       // home: RegistrationForm(),
-      home: RechargePage(),
+      home: HomeScreenNew(),
     );
   }
 }

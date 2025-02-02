@@ -11,15 +11,15 @@ class AlertsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       transform: Matrix4.translationValues(0, -70, 0),
-
-     width: context.width * 0.2,
+height: context.height/2.2,
+     width: context.width * 0.18,
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
       decoration: BoxDecoration(
         color: lightBlack.withOpacity(0.9),
         borderRadius: BorderRadius.circular(15.0),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'Alerts',
