@@ -205,7 +205,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
                   ),
                 ),
                 Text(
-                  'Balance: ${user.balance ?? '0.00'}',
+                  'Balance: ${user.status == 'blocked' ? "0.00" : user.balance}',
                   style: const TextStyle(fontSize: 14.0, color: Colors.white),
                 ),
                 Text(

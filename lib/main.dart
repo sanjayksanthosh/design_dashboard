@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hidden_dash_new/providers/registrationProviders.dart';
 import 'package:hidden_dash_new/providers/userProvider.dart';
 import 'package:hidden_dash_new/screens/registrationPage.dart';
-import 'package:hidden_dash_new/screens/searchUserPage.dart';
 import 'package:hidden_dash_new/services/api_services.dart';
 import 'package:hidden_dash_new/services/user_services.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark(useMaterial3: true).copyWith(
           scaffoldBackgroundColor: darkBlack,
         ),
-        home: UserSearchPage(), // Your main screen
+        home: HomeScreenNew(), // Your main screen
       ),
     );
   }
