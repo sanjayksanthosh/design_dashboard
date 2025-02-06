@@ -1,10 +1,10 @@
 import '../../utils/media_query_values.dart';
 import 'package:flutter/material.dart';
 
-class Profiletext extends StatelessWidget {
+class ProfileText extends StatelessWidget {
   String? title;
   String? content;
-   Profiletext({
+   ProfileText({
     this.title,
     this.content,
     super.key,

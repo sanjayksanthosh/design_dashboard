@@ -13,6 +13,8 @@ dependencies:
   dashboard: ^0.0.4
   fl_chart: ^0.62.0
   percent_indicator: ^4.2.4
+  provider: ^6.1.2
+  rive: 0.13.14
 
 
 dev_dependencies:

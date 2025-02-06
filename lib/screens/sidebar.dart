@@ -158,7 +158,7 @@ class _SideBarState extends State<SideBar> {
           case 1:
             // Navigate to Messages
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return RegistrationForm(); // Replace with your actual messages page
+              return RegistrationPage(); // Replace with your actual messages page
             }));
             break;
           case 2:
