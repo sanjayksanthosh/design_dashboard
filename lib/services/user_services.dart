@@ -55,8 +55,10 @@ class UserService {
       headers: {'Content-Type': 'application/json'},
       body: json.encode(userData),
     );
+    var data = jsonDecode(response.body);
     print(response.body);
-    if (response.statusCode == 201) {
+
+    if (data['message']=="User created successfully") {
       return true;
     } else {
       return false;

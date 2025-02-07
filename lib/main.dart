@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_dash_new/providers/registrationProviders.dart';
+import 'package:hidden_dash_new/providers/transactionProviders.dart';
 import 'package:hidden_dash_new/providers/userProvider.dart';
+import 'package:hidden_dash_new/screens/loginPage.dart';
 import 'package:hidden_dash_new/screens/registrationPage.dart';
 import 'package:hidden_dash_new/services/api_services.dart';
 import 'package:hidden_dash_new/services/user_services.dart';
@@ -19,11 +21,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => TransactionProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider(UserService('https://etra-citizen.onrender.com/api'))), // Add UserProvider
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Dashboard Template UI',
+        title: 'Etra',
         theme: ThemeData.dark(useMaterial3: true).copyWith(
           scaffoldBackgroundColor: darkBlack,
         ),

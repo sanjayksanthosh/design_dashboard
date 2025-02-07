@@ -78,44 +78,49 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             // Row 1: User ID & Full Name
                             Row(
                               children: [
-                                Expanded(child: _buildTextField('User ID')),
-                                const SizedBox(width: 10),
                                 Expanded(child: _buildTextField('Full Name')),
+                                const SizedBox(width: 10),
+
+                                Expanded(child: _buildTextField('Emirates ID No')),
                               ],
                             ),
                             const SizedBox(height: 10.0),
                             // Row 2: Emirates ID No & Card Type
                             Row(
                               children: [
-                                Expanded(child: _buildTextField('Emirates ID No')),
-                                const SizedBox(width: 10),
                                 Expanded(child: _buildDropdownField('Card Type', ['EID', 'White'])),
+
+                                const SizedBox(width: 10),
+
+                                Expanded(child: _buildDateField('ID Expiration Date')),
                               ],
                             ),
                             const SizedBox(height: 10.0),
                             // Row 3: ID Expiration Date (with date picker) & Status
                             Row(
                               children: [
-                                Expanded(child: _buildDateField('ID Expiration Date')),
-                                const SizedBox(width: 10),
+
                                 Expanded(child: _buildDropdownField('Status', ['Active', 'Blocked', 'Frozen'])),
+                                const SizedBox(width: 10),
+
+                                Expanded(child: _buildTextField('Remarks', isOptional: true)),
                               ],
                             ),
                             const SizedBox(height: 10.0),
                             // Row 4: Remarks (optional) & Company Name
                             Row(
                               children: [
-                                Expanded(child: _buildTextField('Remarks', isOptional: true)),
-                                const SizedBox(width: 10),
                                 Expanded(child: _buildTextField('Company Name')),
+
+                                const SizedBox(width: 10),
+                                Expanded(child: _buildTextField('Store Name')),
+
                               ],
                             ),
                             const SizedBox(height: 10.0),
                             // Row 5: Store Name & Online Company checkbox
                             Row(
                               children: [
-                                Expanded(child: _buildTextField('Store Name')),
-                                const SizedBox(width: 30),
                                 Expanded(
                                   child: Row(
                                     children: [

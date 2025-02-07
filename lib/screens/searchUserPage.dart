@@ -4,6 +4,7 @@ import 'package:hidden_dash_new/models/userModel.dart';
 import 'package:hidden_dash_new/providers/userProvider.dart';
 import 'package:hidden_dash_new/screens/profilePage.dart';
 import 'package:hidden_dash_new/utils/media_query_values.dart';
+import 'package:hidden_dash_new/widgets/loading_widget.dart';
 import 'package:hidden_dash_new/widgets/statusButton.dart';
 import 'package:provider/provider.dart';
 import 'header.dart';
@@ -33,42 +34,44 @@ class _UserSearchPageState extends State<UserSearchPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Fixed header at the top
+                  // Stack to layer the header and the search/table container.
                   Stack(
                     children: [
-                      Container(width: context.width,height: context.height,),
+                      // Background container covering the full screen.
+                      Container(
+                        width: context.width,
+                        height: context.height,
+                      ),
+                      // Fixed header at the top.
                       Header(),
+                      // Positioned container for the search field and user list.
                       Positioned(
                         top: 100,
-                        left: context.width/35,
-                        child: Expanded(
-                                          child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          height: context.height/1.3,
-                          width: context.width/1.2,
-                          decoration: BoxDecoration(
-                            color: lightBlack.withOpacity(0.9),
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          padding: const EdgeInsets.all(30),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildSearchField(),
-                              const SizedBox(height: 20),
-                              // Expanded ListView will scroll when content overflows.
-                              Expanded(child: _buildUserTable()),
-                            ],
+                        left: context.width / 35,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                            height: context.height / 1.3,
+                            width: context.width / 1.2,
+                            decoration: BoxDecoration(
+                              color: lightBlack.withOpacity(0.9),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            padding: const EdgeInsets.all(30),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildSearchField(),
+                                const SizedBox(height: 20),
+                                // Expanded widget to allow the user list to scroll.
+                                Expanded(child: _buildUserTable()),
+                              ],
+                            ),
                           ),
                         ),
-                                          ),
-                                        ),
                       ),
                     ],
                   ),
-                  // The content area below the header
-                  
                 ],
               ),
             ),
@@ -78,6 +81,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
     );
   }
 
+  /// Builds the search text field.
   Widget _buildSearchField() {
     return SizedBox(
       width: 300,
@@ -98,12 +102,13 @@ class _UserSearchPageState extends State<UserSearchPage> {
     );
   }
 
+  /// Builds the list of users.
   Widget _buildUserTable() {
     return Consumer<UserProvider>(
       builder: (context, userProvider, child) {
         final users = userProvider.users;
         if (users.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: LoadingWidget());
         }
         return ListView.builder(
           itemCount: users.length,
@@ -116,11 +121,13 @@ class _UserSearchPageState extends State<UserSearchPage> {
     );
   }
 
+  /// Builds the container that displays user information.
   Widget _buildUserContainer(User user) {
     return InkWell(
       onTap: () {
-        Provider.of<UserProvider>(context, listen: false)
-            .setCurrentUser(user);
+        // Set the selected user in the provider.
+        Provider.of<UserProvider>(context, listen: false).setCurrentUser(user);
+        // Show the user's profile in a dialog.
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -135,8 +142,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          color:
-              const Color.fromARGB(255, 28, 28, 28).withOpacity(0.7),
+          color: const Color.fromARGB(255, 28, 28, 28).withOpacity(0.7),
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: const [
             BoxShadow(
@@ -149,7 +155,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Row with user basic information and status button
+            // Row with user basic information and status button.
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -180,7 +186,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
             const SizedBox(height: 8.0),
             const Divider(color: Colors.white54),
             const SizedBox(height: 8.0),
-            // Row with additional user details
+            // Row with additional user details.
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -201,7 +207,8 @@ class _UserSearchPageState extends State<UserSearchPage> {
                         : user.status == 'blocked'
                             ? Colors.red
                             : user.status == 'frozen'
-                            ? Colors.blue:Colors.amber
+                                ? Colors.blue
+                                : Colors.amber,
                   ),
                 ),
                 Text(
@@ -209,7 +216,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
                   style: const TextStyle(fontSize: 14.0, color: Colors.white),
                 ),
                 Text(
-                  'Expiration: ${user.idExpiration ?? 'N/A'}',
+                  'Expiration: ${user.idExpiration.toString()}',
                   style: const TextStyle(fontSize: 14.0, color: Colors.white),
                 ),
               ],

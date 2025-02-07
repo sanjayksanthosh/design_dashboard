@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_dash_new/models/userModel.dart';
 import 'package:hidden_dash_new/providers/userProvider.dart';
@@ -96,13 +97,16 @@ class CustomCard extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                user.fullName,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1.2,
+                              SizedBox(width:280,
+                                child: AutoSizeText(
+                                  maxLines: 2,
+                                  user.fullName,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.2,
+                                  ),
                                 ),
                               ),
                               // A sample icon – you can replace this with a custom graphic.

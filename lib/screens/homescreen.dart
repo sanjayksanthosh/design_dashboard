@@ -4,8 +4,10 @@ import 'package:hidden_dash_new/screens/sidebar.dart';
 import 'package:hidden_dash_new/utils/media_query_values.dart';
 import 'package:hidden_dash_new/widgets/alertContainer.dart';
 import 'package:hidden_dash_new/widgets/firstcard.dart';
+import 'package:hidden_dash_new/widgets/loading_widget.dart';
 import 'package:hidden_dash_new/widgets/overview_statistic_widget.dart';
 import 'package:hidden_dash_new/widgets/stock_widget.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeScreenNew extends StatelessWidget {
   const HomeScreenNew({super.key});
@@ -21,6 +23,7 @@ class HomeScreenNew extends StatelessWidget {
               child: Column(
                 children: [
                   const Header(),
+// LoadingWidget(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: Container(
