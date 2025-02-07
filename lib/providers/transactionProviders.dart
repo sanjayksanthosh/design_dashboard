@@ -28,4 +28,21 @@ class TransactionProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // <-- ADD THE NEW FUNCTION BELOW
+
+  Future<void> fetchTransactionsByUser(String userId) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      _transactions = await _service.fetchTransactionsByUser(userId);
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 }

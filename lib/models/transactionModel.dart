@@ -23,6 +23,20 @@ class Transaction {
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
+    String userId = '';
+    String fullName = '';
+    if (json['user'] is Map<String, dynamic>) {
+      // Convert the nested userId to a string regardless of its original type.
+      userId = (json['user']['userId'] ?? '').toString();
+      fullName = (json['user']['fullName'] ?? '').toString();
+    } else if (json['user'] is String) {
+      userId = json['user'];
+      fullName = ''; // No fullName provided in this case.
+    } else if (json['user'] is int) {
+      // In case the API returns the user id as an int.
+      userId = json['user'].toString();
+      fullName = '';
+    }
     return Transaction(
       id: json['_id'] ?? '',
       transactionId: json['transactionId'] ?? '',
@@ -35,8 +49,8 @@ class Transaction {
       date: DateTime.tryParse(json['date'] ?? '') ?? DateTime.now(),
       description: json['description'] ?? '',
       type: json['type'] ?? '',
-      userId: json['user'] != null ? (json['user']['userId'] ?? '') : '',
-      fullName: json['user'] != null ? (json['user']['fullName'] ?? '') : '',
+      userId: userId,
+      fullName: fullName,
     );
   }
 }

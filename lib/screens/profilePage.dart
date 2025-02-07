@@ -7,6 +7,10 @@ import 'package:hidden_dash_new/widgets/CustomCard.dart';
 import 'package:hidden_dash_new/widgets/profileText.dart';
 import 'package:provider/provider.dart';
 
+// NEW: Import the transaction model and service.
+import 'package:hidden_dash_new/models/transactionModel.dart';
+import 'package:hidden_dash_new/services/transaction_services.dart';
+
 class Profilepage extends StatefulWidget {
   const Profilepage({super.key});
 
@@ -15,12 +19,13 @@ class Profilepage extends StatefulWidget {
 }
 
 class _ProfilepageState extends State<Profilepage> {
-  // Sample travel and recharge history lists.
+  // Sample travel history list.
   List<Map<String, String>> travelHistory = [
     {'date': '2025-01-20', 'route': 'Route 1', 'charge': '₹50'},
     {'date': '2025-01-21', 'route': 'Route 2', 'charge': '₹60'},
   ];
 
+  // The hardcoded rechargeHistory list is no longer used for the Recharge tab.
   List<Map<String, String>> rechargeHistory = [
     {'date': '2025-01-19', 'amount': '₹500'},
     {'date': '2025-01-25', 'amount': '₹300'},
@@ -45,16 +50,7 @@ class _ProfilepageState extends State<Profilepage> {
 
   int _selectedIndex = 0;
 
-  // Sample recent data.
-  final List<Map<String, String>> recentRecharges = [
-    {'Date': '2023-10-01', 'Time': '2:30', 'Amount': '\$50'},
-    {'Date': '2023-09-28', 'Time': '2:30', 'Amount': '\$30'},
-    {'Date': '2023-09-25', 'Time': '2:30', 'Amount': '\$20'},
-    {'Date': '2023-09-25', 'Time': '2:30', 'Amount': '\$20'},
-    {'Date': '2023-09-25', 'Time': '2:30', 'Amount': '\$20'},
-    {'Date': '2023-09-25', 'Time': '2:30', 'Amount': '\$20'},
-  ];
-
+  // Sample recent travel data (for the Travels tab).
   final List<Map<String, String>> recentTravels = [
     {'Date': '2023-10-05', 'Time': '2:30', 'BusNo': 'Bus No.1'},
     {'Date': '2023-09-30', 'Time': '2:30', 'BusNo': 'Bus No.6'},
@@ -74,11 +70,35 @@ class _ProfilepageState extends State<Profilepage> {
   bool _isBlockedHovered = false;
   bool _isFreezedHovered = false;
 
+  // NEW: State for fetched recharge transactions.
+  List<Transaction> _userTransactions = [];
+  bool _isLoadingTransactions = true;
+  String? _transactionError;
+
   @override
   void initState() {
     super.initState();
     _currentUser =
         Provider.of<UserProvider>(context, listen: false).currentUser!;
+    // NEW: Fetch the user's recharge transactions.
+    fetchUserTransactions();
+  }
+
+  /// NEW: Fetch transactions for the current user using the transaction service.
+  Future<void> fetchUserTransactions() async {
+    try {
+      List<Transaction> transactions =
+          await TransactionService().fetchTransactionsByUser(_currentUser.userId);
+      setState(() {
+        _userTransactions = transactions;
+        _isLoadingTransactions = false;
+      });
+    } catch (e) {
+      setState(() {
+        _transactionError = e.toString();
+        _isLoadingTransactions = false;
+      });
+    }
   }
 
   /// Update the status via the provider and update the local user status.
@@ -124,32 +144,87 @@ class _ProfilepageState extends State<Profilepage> {
     );
   }
 
+  /// NEW: Build the recharge table using fetched transactions with extended columns.
   Widget _buildRechargeTable() {
-    return DataTable(
-      columns: const [
-        DataColumn(
-          label: Text('Date',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+    if (_isLoadingTransactions) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (_transactionError != null) {
+      return Center(
+        child: Text(
+          _transactionError!,
+          style: const TextStyle(color: Colors.white),
         ),
-        DataColumn(
-          label: Text('Time',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+      );
+    } else if (_userTransactions.isEmpty) {
+      return const Center(
+        child: Text(
+          "No recharge transactions found",
+          style: TextStyle(color: Colors.white),
         ),
-        DataColumn(
-          label: Text('Amount',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+      );
+    } else {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: DataTable(
+          columns: const [
+            DataColumn(
+              label: Text(
+                'User ID',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            DataColumn(
+              label: Text(
+                'Date & Time',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            DataColumn(
+              label: Text(
+                'Option',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            DataColumn(
+              label: Text(
+                'Amount (AED)',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            DataColumn(
+              label: Text(
+                'Payment Method',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            DataColumn(
+              label: Text(
+                'Remarks',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+          rows: _userTransactions.map((transaction) {
+            // Format the date & time string.
+            final dt = transaction.date.toLocal();
+            final dateTimeStr =
+                "${dt.day}-${dt.month}-${dt.year} ${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}";
+            return DataRow(cells: [
+              // Assumes your Transaction model contains these fields.
+              DataCell(Text(transaction.userId)),
+              DataCell(Text(dateTimeStr)),
+              DataCell(Text(transaction.type)),
+              DataCell(Text("AED ${transaction.amount}")),
+              DataCell(Text(transaction.type)),
+              DataCell(Text(transaction.description ?? "")),
+            ]);
+          }).toList(),
         ),
-      ],
-      rows: recentRecharges.map((recharge) {
-        return DataRow(cells: [
-          DataCell(Text(recharge['Date']!)),
-          DataCell(Text(recharge['Time']!)),
-          DataCell(Text(recharge['Amount']!)),
-        ]);
-      }).toList(),
-    );
+      );
+    }
   }
 
+  /// Build the travel table using hardcoded sample data.
   Widget _buildTravelTable() {
     return DataTable(
       columns: const [
@@ -211,9 +286,6 @@ class _ProfilepageState extends State<Profilepage> {
                         style: TextStyle(fontSize: 40),
                       ),
                       const SizedBox(height: 10),
-                      // Updated layout: remove the left empty container and profile texts.
-                      // Instead, show the custom glassmorphism card with user details on the left,
-                      // and freeze/block buttons on the right.
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -255,8 +327,7 @@ class _ProfilepageState extends State<Profilepage> {
                                         color: status == 'frozen'
                                             ? Colors.blueAccent
                                             : _isFreezedHovered
-                                                ? Colors.blueAccent
-                                                    .withOpacity(0.2)
+                                                ? Colors.blueAccent.withOpacity(0.2)
                                                 : Colors.transparent,
                                       ),
                                       child: Row(
@@ -308,8 +379,7 @@ class _ProfilepageState extends State<Profilepage> {
                                       color: status == 'blocked'
                                           ? Colors.redAccent
                                           : _isBlockedHovered
-                                              ? Colors.redAccent
-                                                  .withOpacity(0.2)
+                                              ? Colors.redAccent.withOpacity(0.2)
                                               : Colors.transparent,
                                     ),
                                     child: Row(
