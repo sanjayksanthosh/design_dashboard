@@ -13,18 +13,56 @@ import 'package:hidden_dash_new/services/user_services.dart';
 import 'package:provider/provider.dart';
 import 'screens/homescreen.dart'; // Import your HomeScreen widget
 import 'utils/colors.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+
+
+
+// void main() {
+//   // Replace with your Render service URL
+//   IO.Socket socket = IO.io(
+//     'https://etra-citizen.onrender.com',
+//     IO.OptionBuilder()
+//         .setTransports(<String>['websocket']) // for Flutter, use websocket transport
+//         .enableAutoConnect() // optional
+//         .build(),
+//   );
+
+//   socket.onConnect((_) {
+//     print('Connected to the backend!');
+//   });
+
+//   // Listen for an event from the server
+//   socket.on('chat message', (data) {
+//     print('New chat message: $data');
+//   });
+
+//   // Example: emit an event
+//   socket.emit('chat message', 'Hello from Flutter!');
+// }
+
 
 void main() {
-  final socketService = SocketService();
-  runApp(MyApp(socketService: socketService));
+  // Ensures that the Flutter framework is fully initialized.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Now run the app.
+  runApp(MyApp());
 }
 
+// void main() {
+//   final socketService = SocketService(
+//     serverUrl: 'https://etra-citizen.onrender.com', // Remove the port if using default HTTPS
+//   );
+  
+//   runApp(MyApp(socketService: socketService));
+// }
 class MyApp extends StatelessWidget {
-  final SocketService socketService;
+  // final SocketService socketService;
   final AuthService authService =
       AuthService(baseUrl: 'https://etra-citizen.onrender.com/api');
 
-  MyApp({super.key,required this.socketService});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +70,7 @@ class MyApp extends StatelessWidget {
       providers: [
         // SocketService provider
         Provider<SocketService>(
-          create: (_) => SocketService(),
+          create: (_) => SocketService(serverUrl: 'https://etra-citizen.onrender.com/api'),
           dispose: (_, socketService) => socketService.dispose(),
         ),
 
