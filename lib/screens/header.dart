@@ -82,9 +82,9 @@ class Header extends StatelessWidget {
                 children: [
                   const CircleAvatar(
                     radius: 20.0,
-                    backgroundImage: NetworkImage(
-                      'https://media.licdn.com/dms/image/D4E03AQHirihVTwk9sA/profile-displayphoto-shrink_800_800/0/1678926297499?e=2147483647&v=beta&t=AXEpUxgTP1zcc3eP1U4jN6oiu9N9yzL1hHj83WZjZtU',
-                    ),
+                    // backgroundImage: NetworkImage(
+                    //   'https://media.licdn.com/dms/image/D4E03AQHirihVTwk9sA/profile-displayphoto-shrink_800_800/0/1678926297499?e=2147483647&v=beta&t=AXEpUxgTP1zcc3eP1U4jN6oiu9N9yzL1hHj83WZjZtU',
+                    // ),
                   ),
                   SizedBox(
                     width: context.width * 0.007,

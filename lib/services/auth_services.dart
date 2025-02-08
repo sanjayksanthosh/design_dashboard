@@ -5,13 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../config.dart';
 
 class AuthService {
-  final String baseUrl;
+ 
 
-  AuthService({this.baseUrl = kApiBaseUrl});
+  AuthService();
 
 
   Future<Map<String, dynamic>> login(String userid, String password) async {
-    final url = Uri.parse('$baseUrl/auth/login');
+    final url = Uri.parse('$kApiBaseUrl/auth/login');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -30,7 +30,7 @@ print(response.body);
 
   /// Calls the refresh-token endpoint using the [refreshToken].
   Future<Map<String, dynamic>> refreshToken(String refreshToken) async {
-    final url = Uri.parse('$baseUrl/auth/refresh-token');
+    final url = Uri.parse('$kApiBaseUrl/auth/refresh-token');
     final response = await http.post(
       url,
       headers: {
@@ -50,7 +50,7 @@ print(response.body);
   /// No 'Authorization' header is sent if the server expects to read
   /// the refresh token from an HTTP-only cookie.
   Future<void> logout() async {
-    final url = Uri.parse('$baseUrl/auth/logout');
+    final url = Uri.parse('$kApiBaseUrl/auth/logout');
          final prefs = await SharedPreferences.getInstance();
         String? token=await prefs.getString('accessToken');
     final response = await http.post(

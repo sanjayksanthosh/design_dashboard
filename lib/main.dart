@@ -60,7 +60,7 @@ void main() {
 class MyApp extends StatelessWidget {
   // final SocketService socketService;
   final AuthService authService =
-      AuthService(baseUrl: 'https://etra-citizen.onrender.com/api');
+      AuthService();
 
   MyApp({super.key});
 
@@ -73,14 +73,14 @@ class MyApp extends StatelessWidget {
         //   create: (_) => SocketService(serverUrl: 'https://etra-citizen.onrender.com/api'),
         //   dispose: (_, socketService) => socketService.dispose(),
         // ),
-
+     ChangeNotifierProvider<AuthProvider>(
+          create: (_) => AuthProvider(authService: authService),
+        ),
         // Other providers
         ChangeNotifierProvider(create: (_) => TransactionProvider()),
         ChangeNotifierProvider(create: (_) => ReportProvider()),
 
-        ChangeNotifierProvider<AuthProvider>(
-          create: (_) => AuthProvider(authService: authService),
-        ),
+   
 
         ChangeNotifierProvider(
           create: (context) => UserProvider(UserService(baseUrl: kApiBaseUrl)
