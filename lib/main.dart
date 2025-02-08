@@ -44,9 +44,7 @@ import 'utils/colors.dart';
 
 void main() {
   // Ensures that the Flutter framework is fully initialized.
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Now run the app.
+ WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

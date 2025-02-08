@@ -14,9 +14,9 @@ class Header extends StatelessWidget {
       height: context.height ,
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
       decoration: BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage("https://img.freepik.com/free-photo/abstract-gradient-neon-lights_23-2149279139.jpg?semt=ais_hybrid")),
+        // image: DecorationImage(
+        //   fit: BoxFit.cover,
+        //   image: NetworkImage("https://img.freepik.com/free-photo/abstract-gradient-neon-lights_23-2149279139.jpg?semt=ais_hybrid")),
             // gradient: LinearGradient(
             //   begin: Alignment.topLeft,      // Gradient starts at the top-left corner
             //   end: Alignment.bottomRight,      // Gradient ends at the bottom-right corner
