@@ -69,10 +69,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         // SocketService provider
-        Provider<SocketService>(
-          create: (_) => SocketService(serverUrl: 'https://etra-citizen.onrender.com/api'),
-          dispose: (_, socketService) => socketService.dispose(),
-        ),
+        // Provider<SocketService>(
+        //   create: (_) => SocketService(serverUrl: 'https://etra-citizen.onrender.com/api'),
+        //   dispose: (_, socketService) => socketService.dispose(),
+        // ),
 
         // Other providers
         ChangeNotifierProvider(create: (_) => TransactionProvider()),

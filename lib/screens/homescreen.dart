@@ -19,7 +19,7 @@ class HomeScreenNew extends StatelessWidget {
   Widget build(BuildContext context) {
     // Access the SocketService if you need to use it in your widget.
     // For example, you could listen for specific events or emit events.
-    final socketService = Provider.of<SocketService>(context, listen: false);
+    // final socketService = Provider.of<SocketService>(context, listen: false);
 
     return Scaffold(
       body: Row(
