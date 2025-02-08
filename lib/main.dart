@@ -13,7 +13,7 @@ import 'package:hidden_dash_new/services/user_services.dart';
 import 'package:provider/provider.dart';
 import 'screens/homescreen.dart'; // Import your HomeScreen widget
 import 'utils/colors.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+// import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
 
