@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_dash_new/models/userModel.dart';
+import 'package:hidden_dash_new/providers/transactionProviders.dart';
 import 'package:hidden_dash_new/providers/userProvider.dart';
 import 'package:hidden_dash_new/utils/colors.dart';
 import 'package:hidden_dash_new/utils/media_query_values.dart';
@@ -7,9 +8,7 @@ import 'package:hidden_dash_new/widgets/CustomCard.dart';
 import 'package:hidden_dash_new/widgets/profileText.dart';
 import 'package:provider/provider.dart';
 
-// NEW: Import the transaction model and service.
-import 'package:hidden_dash_new/models/transactionModel.dart';
-import 'package:hidden_dash_new/services/transaction_services.dart';
+// Import the provider for transactions
 
 class Profilepage extends StatefulWidget {
   const Profilepage({super.key});
@@ -19,49 +18,20 @@ class Profilepage extends StatefulWidget {
 }
 
 class _ProfilepageState extends State<Profilepage> {
-  // Sample travel history list.
+  // Hardcoded travel history lists (for demonstration)
   List<Map<String, String>> travelHistory = [
     {'date': '2025-01-20', 'route': 'Route 1', 'charge': '₹50'},
     {'date': '2025-01-21', 'route': 'Route 2', 'charge': '₹60'},
   ];
 
-  // The hardcoded rechargeHistory list is no longer used for the Recharge tab.
-  List<Map<String, String>> rechargeHistory = [
-    {'date': '2025-01-19', 'amount': '₹500'},
-    {'date': '2025-01-25', 'amount': '₹300'},
-  ];
-
-  // Functions to add or edit entries (omitted here for brevity).
-  void addTravelEntry() { /* ... */ }
-  void addRechargeEntry() { /* ... */ }
-  void editTravelEntry(
-      int index,
-      TextEditingController dateController,
-      TextEditingController routeController,
-      TextEditingController chargeController) {
-    /* ... */
-  }
-  void editRechargeEntry(
-      int index,
-      TextEditingController dateController,
-      TextEditingController amountController) {
-    /* ... */
-  }
-
-  int _selectedIndex = 0;
-
-  // Sample recent travel data (for the Travels tab).
+  // Hardcoded sample data for the Travels tab
   final List<Map<String, String>> recentTravels = [
     {'Date': '2023-10-05', 'Time': '2:30', 'BusNo': 'Bus No.1'},
     {'Date': '2023-09-30', 'Time': '2:30', 'BusNo': 'Bus No.6'},
     {'Date': '2023-09-20', 'Time': '2:30', 'BusNo': 'Bus No.2'},
   ];
 
-  void _onTabTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  int _selectedIndex = 0;
 
   // Retrieve the current user from the provider.
   late User _currentUser;
@@ -70,35 +40,17 @@ class _ProfilepageState extends State<Profilepage> {
   bool _isBlockedHovered = false;
   bool _isFreezedHovered = false;
 
-  // NEW: State for fetched recharge transactions.
-  List<Transaction> _userTransactions = [];
-  bool _isLoadingTransactions = true;
-  String? _transactionError;
-
   @override
   void initState() {
     super.initState();
-    _currentUser =
-        Provider.of<UserProvider>(context, listen: false).currentUser!;
-    // NEW: Fetch the user's recharge transactions.
-    fetchUserTransactions();
-  }
-
-  /// NEW: Fetch transactions for the current user using the transaction service.
-  Future<void> fetchUserTransactions() async {
-    try {
-      List<Transaction> transactions =
-          await TransactionService().fetchTransactionsByUser(_currentUser.userId);
-      setState(() {
-        _userTransactions = transactions;
-        _isLoadingTransactions = false;
-      });
-    } catch (e) {
-      setState(() {
-        _transactionError = e.toString();
-        _isLoadingTransactions = false;
-      });
-    }
+    // Get the current user from the UserProvider
+    _currentUser = Provider.of<UserProvider>(context, listen: false).currentUser!;
+    
+    // Immediately fetch this user's transactions from the TransactionProvider
+    Future.microtask(() {
+      Provider.of<TransactionProvider>(context, listen: false)
+          .fetchTransactionsByUser(_currentUser.userId);
+    });
   }
 
   /// Update the status via the provider and update the local user status.
@@ -144,18 +96,58 @@ class _ProfilepageState extends State<Profilepage> {
     );
   }
 
-  /// NEW: Build the recharge table using fetched transactions with extended columns.
+  /// Handle tab switching (Recharges vs. Travels)
+  void _onTabTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  /// Build the travel table (uses your local sample data)
+  Widget _buildTravelTable() {
+    return DataTable(
+      columns: const [
+        DataColumn(
+          label: Text('Date',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+        ),
+        DataColumn(
+          label: Text('Time',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+        ),
+        DataColumn(
+          label: Text('Bus No',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+        ),
+      ],
+      rows: recentTravels.map((travel) {
+        return DataRow(cells: [
+          DataCell(Text(travel['Date']!)),
+          DataCell(Text(travel['Time']!)),
+          DataCell(Text(travel['BusNo']!)),
+        ]);
+      }).toList(),
+    );
+  }
+
+  /// Build the recharge table using TransactionProvider data
   Widget _buildRechargeTable() {
-    if (_isLoadingTransactions) {
+    // Read transaction data/state from the provider
+    final transactionProvider = Provider.of<TransactionProvider>(context);
+    final isLoading = transactionProvider.isLoading;
+    final error = transactionProvider.error;
+    final transactions = transactionProvider.transactions;
+
+    if (isLoading) {
       return const Center(child: CircularProgressIndicator());
-    } else if (_transactionError != null) {
+    } else if (error != null) {
       return Center(
         child: Text(
-          _transactionError!,
+          error,
           style: const TextStyle(color: Colors.white),
         ),
       );
-    } else if (_userTransactions.isEmpty) {
+    } else if (transactions.isEmpty) {
       return const Center(
         child: Text(
           "No recharge transactions found",
@@ -163,6 +155,7 @@ class _ProfilepageState extends State<Profilepage> {
         ),
       );
     } else {
+      // Build a scrollable DataTable
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(
@@ -204,13 +197,14 @@ class _ProfilepageState extends State<Profilepage> {
               ),
             ),
           ],
-          rows: _userTransactions.map((transaction) {
-            // Format the date & time string.
+          rows: transactions.map((transaction) {
             final dt = transaction.date.toLocal();
             final dateTimeStr =
-                "${dt.day}-${dt.month}-${dt.year} ${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}";
+                "${dt.day}-${dt.month}-${dt.year} "
+                "${dt.hour.toString().padLeft(2, '0')}:"
+                "${dt.minute.toString().padLeft(2, '0')}";
+
             return DataRow(cells: [
-              // Assumes your Transaction model contains these fields.
               DataCell(Text(transaction.userId)),
               DataCell(Text(dateTimeStr)),
               DataCell(Text(transaction.type)),
@@ -224,40 +218,11 @@ class _ProfilepageState extends State<Profilepage> {
     }
   }
 
-  /// Build the travel table using hardcoded sample data.
-  Widget _buildTravelTable() {
-    return DataTable(
-      columns: const [
-        DataColumn(
-          label: Text('Date',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-        ),
-        DataColumn(
-          label: Text('Time',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-        ),
-        DataColumn(
-          label: Text('Bus No',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-        ),
-      ],
-      rows: recentTravels.map((travel) {
-        return DataRow(cells: [
-          DataCell(Text(travel['Date']!)),
-          DataCell(Text(travel['Time']!)),
-          DataCell(Text(travel['BusNo']!)),
-        ]);
-      }).toList(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    // Determine current status and corresponding button texts.
     final String status = _currentUser.status.toLowerCase();
     final String blockButtonText = status == 'blocked' ? "UnBlock" : "Block";
-    final String freezeButtonText =
-        status == 'frozen' ? "UnFreeze" : "Freeze";
+    final String freezeButtonText = status == 'frozen' ? "UnFreeze" : "Freeze";
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -290,9 +255,9 @@ class _ProfilepageState extends State<Profilepage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Left side: Glassmorphism card with user details.
+                          // Left side: Glassmorphism card with user details
                           CustomCard(),
-                          // Right side: Freeze/Block buttons.
+                          // Right side: Freeze/Block buttons
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -322,7 +287,8 @@ class _ProfilepageState extends State<Profilepage> {
                                       padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: Colors.blueAccent),
+                                          color: Colors.blueAccent,
+                                        ),
                                         borderRadius: BorderRadius.circular(20),
                                         color: status == 'frozen'
                                             ? Colors.blueAccent
@@ -374,7 +340,8 @@ class _ProfilepageState extends State<Profilepage> {
                                     padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                          color: Colors.redAccent),
+                                        color: Colors.redAccent,
+                                      ),
                                       borderRadius: BorderRadius.circular(20),
                                       color: status == 'blocked'
                                           ? Colors.redAccent
@@ -415,13 +382,15 @@ class _ProfilepageState extends State<Profilepage> {
                             const Text(
                               "History",
                               style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: 200,
                                   child: Row(
                                     mainAxisAlignment:
@@ -481,7 +450,7 @@ class _ProfilepageState extends State<Profilepage> {
                               ],
                             ),
                             const SizedBox(height: 16.0),
-                            Container(
+                            SizedBox(
                               width: context.width,
                               child: _selectedIndex == 0
                                   ? _buildRechargeTable()
@@ -502,14 +471,16 @@ class _ProfilepageState extends State<Profilepage> {
                   child: Container(
                     height: 30,
                     width: 30,
-                    child: const Center(
-                        child: Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    )),
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white)),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ),
+                    ),
                   ),
                 ),
               )

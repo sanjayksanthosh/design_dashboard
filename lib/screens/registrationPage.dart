@@ -48,132 +48,137 @@ class _RegistrationPageState extends State<RegistrationPage> {
           const SideBar(),
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
+              child: Stack(
                 children: [
                   const Header(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      width: context.width / 1.5,
-                      padding: const EdgeInsets.all(30),
-                      transform: Matrix4.translationValues(0, -120, 0),
-                      decoration: BoxDecoration(
-                        color: lightBlack.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'User Registration',
-                              style: TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(height: 20.0),
-                            // Row 1: User ID & Full Name
-                            Row(
+                  SizedBox(width: context.width,
+                  height: context.height,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          width: context.width / 1.5,
+                          height: context.height / 1.3,
+                          padding: const EdgeInsets.all(30),
+                          decoration: BoxDecoration(
+                            color: lightBlack.withOpacity(0.9),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(child: _buildTextField('Full Name')),
-                                const SizedBox(width: 10),
-
-                                Expanded(child: _buildTextField('Emirates ID No')),
-                              ],
-                            ),
-                            const SizedBox(height: 10.0),
-                            // Row 2: Emirates ID No & Card Type
-                            Row(
-                              children: [
-                                Expanded(child: _buildDropdownField('Card Type', ['EID', 'White'])),
-
-                                const SizedBox(width: 10),
-
-                                Expanded(child: _buildDateField('ID Expiration Date')),
-                              ],
-                            ),
-                            const SizedBox(height: 10.0),
-                            // Row 3: ID Expiration Date (with date picker) & Status
-                            Row(
-                              children: [
-
-                                Expanded(child: _buildDropdownField('Status', ['Active', 'Blocked', 'Frozen'])),
-                                const SizedBox(width: 10),
-
-                                Expanded(child: _buildTextField('Remarks', isOptional: true)),
-                              ],
-                            ),
-                            const SizedBox(height: 10.0),
-                            // Row 4: Remarks (optional) & Company Name
-                            Row(
-                              children: [
-                                Expanded(child: _buildTextField('Company Name')),
-
-                                const SizedBox(width: 10),
-                                Expanded(child: _buildTextField('Store Name')),
-
-                              ],
-                            ),
-                            const SizedBox(height: 10.0),
-                            // Row 5: Store Name & Online Company checkbox
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      Checkbox(
-                                        value: isOnlineCompany,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            isOnlineCompany = value!;
-                                            _formData['onlineCompany'] = value;
-                                          });
-                                        },
-                                      ),
-                                      const Text(
-                                        'Online Company',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ],
+                                const Text(
+                                  'User Registration',
+                                  style: TextStyle(
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
+                                ),
+                                const SizedBox(height: 20.0),
+                                // Row 1: User ID & Full Name
+                                Row(
+                                  children: [
+                                    Expanded(child: _buildTextField('Full Name')),
+                                    const SizedBox(width: 10),
+                      
+                                    Expanded(child: _buildTextField('Emirates ID No')),
+                                  ],
+                                ),
+                                const SizedBox(height: 10.0),
+                                // Row 2: Emirates ID No & Card Type
+                                Row(
+                                  children: [
+                                    Expanded(child: _buildDropdownField('Card Type', ['EID', 'White'])),
+                      
+                                    const SizedBox(width: 10),
+                      
+                                    Expanded(child: _buildDateField('ID Expiration Date')),
+                                  ],
+                                ),
+                                const SizedBox(height: 10.0),
+                                // Row 3: ID Expiration Date (with date picker) & Status
+                                Row(
+                                  children: [
+                      
+                                    Expanded(child: _buildDropdownField('Status', ['Active', 'Blocked', 'Frozen'])),
+                                    const SizedBox(width: 10),
+                      
+                                    Expanded(child: _buildTextField('Remarks', isOptional: true)),
+                                  ],
+                                ),
+                                const SizedBox(height: 10.0),
+                                // Row 4: Remarks (optional) & Company Name
+                                Row(
+                                  children: [
+                                    Expanded(child: _buildTextField('Company Name')),
+                      
+                                    const SizedBox(width: 10),
+                                    Expanded(child: _buildTextField('Store Name')),
+                      
+                                  ],
+                                ),
+                                const SizedBox(height: 10.0),
+                                // Row 5: Store Name & Online Company checkbox
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Checkbox(
+                                            value: isOnlineCompany,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                isOnlineCompany = value!;
+                                                _formData['onlineCompany'] = value;
+                                              });
+                                            },
+                                          ),
+                                          const Text(
+                                            'Online Company',
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20.0),
+                                // Register Button
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        if (_formKey.currentState!.validate()) {
+                                          _formKey.currentState!.save();
+                                          print("_formData: $_formData");
+                                          bool success = await Provider.of<UserProvider>(context, listen: false)
+                                              .registerUser(_formData);
+                                          if (success) {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('User registered successfully!')),
+                                            );
+                                          } else {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('User registration failed.')),
+                                            );
+                                          }
+                                        }
+                                      },
+                                      child: const Text('Register'),
+                                      style: ElevatedButton.styleFrom(
+                                        fixedSize: Size(context.width / 3, 50),
+                                        backgroundColor: primaryColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 20.0),
-                            // Register Button
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      _formKey.currentState!.save();
-                                      print("_formData: $_formData");
-                                      bool success = await Provider.of<UserProvider>(context, listen: false)
-                                          .registerUser(_formData);
-                                      if (success) {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(content: Text('User registered successfully!')),
-                                        );
-                                      } else {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(content: Text('User registration failed.')),
-                                        );
-                                      }
-                                    }
-                                  },
-                                  child: const Text('Register'),
-                                  style: ElevatedButton.styleFrom(
-                                    fixedSize: Size(context.width / 3, 50),
-                                    backgroundColor: primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),

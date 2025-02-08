@@ -1,30 +1,73 @@
+// lib/services/auth_services.dart
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import '../config.dart';
 
 class AuthService {
   final String baseUrl;
 
-  AuthService({required this.baseUrl});
+  AuthService({this.baseUrl = kApiBaseUrl});
 
-  /// Calls the login endpoint with the provided [username] and [password].
-  /// Returns a parsed JSON map if successful, or throws an exception.
-  Future<Map<String, dynamic>> login(String username, String password) async {
-    final url = Uri.parse('$baseUrl/api/auth/login');
+
+  Future<Map<String, dynamic>> login(String userid, String password) async {
+    final url = Uri.parse('$baseUrl/auth/login');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
-        'userid': username,
+        'staffId': userid,
         'password': password,
       }),
     );
-
+print(response.body);
     if (response.statusCode == 200) {
-      // Assuming the API returns a JSON containing a token and maybe more info.
       return json.decode(response.body);
     } else {
-      // You might want to throw different exceptions based on the status code.
       throw Exception('Failed to login: ${response.statusCode}');
+    }
+  }
+
+  /// Calls the refresh-token endpoint using the [refreshToken].
+  Future<Map<String, dynamic>> refreshToken(String refreshToken) async {
+    final url = Uri.parse('$baseUrl/auth/refresh-token');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $refreshToken', // Using the refresh token
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to refresh token: ${response.statusCode}');
+    }
+  }
+
+  /// Calls the logout endpoint.
+  /// No 'Authorization' header is sent if the server expects to read
+  /// the refresh token from an HTTP-only cookie.
+  Future<void> logout() async {
+    final url = Uri.parse('$baseUrl/auth/logout');
+         final prefs = await SharedPreferences.getInstance();
+        String? token=await prefs.getString('accessToken');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer $token'
+        // Omit 'Authorization' if the server expects a cookie-based token.
+      },
+    );
+
+    // Optionally log the response for debugging:
+    print('Logout response status: ${response.statusCode}');
+    print('Logout response body: ${response.body}');
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to logout: ${response.body}');
     }
   }
 }

@@ -1,19 +1,12 @@
-// providers/registration_provider.dart
+// lib/providers/registration_provider.dart
 import 'package:flutter/material.dart';
 import 'package:hidden_dash_new/models/registrationModel.dart';
-import 'package:hidden_dash_new/services/api_services.dart';
+import 'package:hidden_dash_new/services/user_services.dart';
 
 class RegistrationProvider with ChangeNotifier {
-  final ApiService apiService;
+  final UserService userService;
 
-  RegistrationProvider(this.apiService);
-
-
-void simple(){
-  print("object");
-}
-
-
+  RegistrationProvider({required this.userService});
 
   RegistrationModel _registrationData = RegistrationModel(
     userId: '',
@@ -74,49 +67,39 @@ void simple(){
         _registrationData.pickLocation = value;
         break;
       case 'isOnline':
-        _registrationData.isOnline = value == 'true';
+        _registrationData.isOnline = (value.toLowerCase() == 'true');
         break;
     }
     notifyListeners();
   }
- Future<bool> registerUser ({
-    required String userId,
-    required String fullName,
-    required String phoneNumber,
-    required String emiratesId,
-    required String idExpirationDate,
-    required String balance,
-    required String remarks,
-    required String cardType,
-    required String status,
-    required String companyName,
-    required String storeName,
-    required String pickLocation,
-    required bool isOnline,
-  }) async {
+
+  Future<bool> registerUser() async {
     try {
-      print(userId);
-      _errorMessage = null; // Reset error message
-      await apiService.postRequest('user/register', {
-        'userId': userId,
-        'fullName': fullName,
-        'phoneNumber': phoneNumber,
-        'emiratesId': emiratesId,
-        'idExpirationDate': idExpirationDate,
-        'balance': balance,
-        'remarks': remarks,
-        'cardType': cardType,
-        'status': status,
-        'companyName': companyName,
-        'storeName': storeName,
-        'pickLocation': pickLocation,
-        'isOnline': isOnline,
+      _errorMessage = null;
+      final success = await userService.registerUser({
+        'userId': _registrationData.userId,
+        'fullName': _registrationData.fullName,
+        'phoneNumber': _registrationData.phoneNumber,
+        'emiratesId': _registrationData.emiratesId,
+        'idExpirationDate': _registrationData.idExpirationDate,
+        'balance': _registrationData.balance,
+        'remarks': _registrationData.remarks,
+        'cardType': _registrationData.cardType,
+        'status': _registrationData.status,
+        'companyName': _registrationData.companyName,
+        'storeName': _registrationData.storeName,
+        'pickLocation': _registrationData.pickLocation,
+        'isOnline': _registrationData.isOnline,
       });
-      return true; // Registration successful
+
+      if (success) {
+        // Clear form or do some success handling
+      }
+      return success;
     } catch (error) {
       _errorMessage = error.toString();
       notifyListeners();
-      return false; // Registration failed
+      return false;
     }
   }
 }

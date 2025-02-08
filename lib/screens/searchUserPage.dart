@@ -6,6 +6,7 @@ import 'package:hidden_dash_new/screens/profilePage.dart';
 import 'package:hidden_dash_new/utils/media_query_values.dart';
 import 'package:hidden_dash_new/widgets/loading_widget.dart';
 import 'package:hidden_dash_new/widgets/statusButton.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'header.dart';
 import 'sidebar.dart';
@@ -104,6 +105,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
 
   /// Builds the list of users.
   Widget _buildUserTable() {
+    
     return Consumer<UserProvider>(
       builder: (context, userProvider, child) {
         final users = userProvider.users;
@@ -120,6 +122,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
       },
     );
   }
+  
 
   /// Builds the container that displays user information.
   Widget _buildUserContainer(User user) {
@@ -128,6 +131,9 @@ class _UserSearchPageState extends State<UserSearchPage> {
         // Set the selected user in the provider.
         Provider.of<UserProvider>(context, listen: false).setCurrentUser(user);
         // Show the user's profile in a dialog.
+ DateTime utcDateTime = DateTime.parse(user.idExpiration.toString());
+ DateTime localDateTime = utcDateTime.toLocal();
+ String formatted = DateFormat('yyyy-MM-dd HH:mm:ss').format(localDateTime);
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -226,4 +232,5 @@ class _UserSearchPageState extends State<UserSearchPage> {
       ),
     );
   }
+  
 }

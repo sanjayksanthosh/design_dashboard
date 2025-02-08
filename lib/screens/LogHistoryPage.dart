@@ -36,46 +36,50 @@ class _HistoryPageState extends State<HistoryPage> {
           SideBar(), // Your sidebar widget
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
+              child: Stack(
                 children: [
                   Header(), // Your header widget
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        transform: Matrix4.translationValues(0, -80, 0),
-                        width: context.width / 1.3,
-                        height: 600, // Fixed height container
-                        padding: EdgeInsets.all(30),
-                        decoration: BoxDecoration(
-                          color: lightBlack.withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "History",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
+                  SizedBox(
+                    height: context.height,
+                    width: context.width,
+
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          width: context.width / 1.3,
+                          height: context.height/1.2, // Fixed height container
+                          padding: EdgeInsets.all(30),
+                          decoration: BoxDecoration(
+                            color: lightBlack.withOpacity(0.9),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "History",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 30),
-                            Row(
-                              children: [
-                                _buildPillButton("Travel History", 0),
-                                _buildPillButton("Recharge History", 1),
-                                _buildPillButton("Financial Transactions", 2),
-                                _buildPillButton("Incidents", 3),
-                              ],
-                            ),
-                            const SizedBox(height: 30),
-                            Expanded(
-                              child: _getTabContent(),
-                            ),
-                          ],
+                              const SizedBox(height: 30),
+                              Row(
+                                children: [
+                                  _buildPillButton("Travel History", 0),
+                                  _buildPillButton("Recharge History", 1),
+                                  _buildPillButton("Financial Transactions", 2),
+                                  _buildPillButton("Incidents", 3),
+                                ],
+                              ),
+                              const SizedBox(height: 30),
+                              Expanded(
+                                child: _getTabContent(),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

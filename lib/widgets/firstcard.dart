@@ -14,7 +14,7 @@ class OverallPortfolioCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      transform: Matrix4.translationValues(0, -90, 0),
+      // transform: Matrix4.translationValues(0, -90, 0),
       width: context.width * 0.65,
       height: context.height * 0.24,
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 22.0),

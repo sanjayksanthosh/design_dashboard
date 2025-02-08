@@ -11,17 +11,32 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.height * 0.28,
+      height: context.height ,
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          alignment: Alignment.bottomCenter,
-          image: AssetImage(
-            'assets/images/header_image.jpeg',
-          ),
           fit: BoxFit.cover,
-        ),
-      ),
+          image: NetworkImage("https://img.freepik.com/free-photo/abstract-gradient-neon-lights_23-2149279139.jpg?semt=ais_hybrid")),
+            // gradient: LinearGradient(
+            //   begin: Alignment.topLeft,      // Gradient starts at the top-left corner
+            //   end: Alignment.bottomRight,      // Gradient ends at the bottom-right corner
+            //   colors: [
+            //  Color(0xff8e9eab),
+            //  Color(0xffeef2f3),
+            //                // Orange in the ending corner
+            //   ],
+            // ),
+          ),
+      // const BoxDecoration(
+        
+        // image: DecorationImage(
+        //   alignment: Alignment.bottomCenter,
+        //   image: AssetImage(
+        //     'assets/images/header_image.jpeg',
+        //   ),
+        //   fit: BoxFit.cover,
+        // ),
+      // ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,

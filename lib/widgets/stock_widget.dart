@@ -1,11 +1,8 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:hidden_dash_new/utils/media_query_values.dart';
 
 import '../../utils/colors.dart';
-import 'custom_button.dart';
-import 'outline_button.dart';
 
 class StockWidget extends StatelessWidget {
   const StockWidget({
@@ -22,7 +19,6 @@ class StockWidget extends StatelessWidget {
           vertical: 16.0,
           horizontal: 22.0,
         ),
-        transform: Matrix4.translationValues(0, -75, 0),
         decoration: BoxDecoration(
           color: lightBlack,
           borderRadius: BorderRadius.circular(25.0),

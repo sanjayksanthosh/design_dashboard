@@ -47,7 +47,7 @@ class _OverviewStatisticState extends State<OverviewStatistic> {
         vertical: 16.0,
         horizontal: 22.0,
       ),
-      transform: Matrix4.translationValues(0, -70, 0),
+      // transform: Matrix4.translationValues(0, -70, 0),
       decoration: BoxDecoration(
         color: lightBlack, // Keep the original color
         borderRadius: BorderRadius.circular(25.0),

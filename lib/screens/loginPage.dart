@@ -22,20 +22,14 @@ class _LoginPageState extends State<LoginPage> {
   // Toggle for password visibility
   bool _obscurePassword = true;
 
+  // Loading state for the login button
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          // Background image
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
           // Dark overlay to enhance readability
           Container(
             color: Colors.black.withOpacity(0.5),
@@ -57,9 +51,8 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       // Company Name at the top
                       Text(
-                        'ECTRA',
+                        'ETRA',
                         style: const TextStyle(
-                          // Replace with your desired custom font, or remove fontFamily to use the default
                           fontFamily: 'Pacifico',
                           fontSize: 36,
                           color: primaryColor,
@@ -112,36 +105,45 @@ class _LoginPageState extends State<LoginPage> {
                         icon: Icons.lock,
                       ),
                       const SizedBox(height: 30),
-                      // Login Button with an icon
-                      ElevatedButton.icon(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            // Call the login function from the AuthProvider.
-                            bool success = await Provider.of<AuthProvider>(
-                                    context,
-                                    listen: false)
-                                .login(_formData);
-                            if (success) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Login successful!')),
-                              );
-                              // Navigate to your home screen or dashboard here.
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        'Login failed. Please try again.')),
-                              );
-                            }
-                          }
-                        },
-                        icon: const Icon(Icons.login),
-                        label: const Text(
-                          'Login',
-                          style: TextStyle(fontSize: 18),
-                        ),
+                      // Login Button with progress indicator while loading
+                      ElevatedButton(
+                        onPressed: _isLoading
+                            ? null
+                            : () async {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  setState(() {
+                                    _isLoading = true;
+                                  });
+                                  // Call the login function from the AuthProvider.
+                                  bool success =
+                                      await Provider.of<AuthProvider>(context,
+                                              listen: false)
+                                          .login(_formData);
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                  if (success) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('Login successful!')),
+                                    );
+                                    // Navigate to your home screen or dashboard here.
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HomeScreenNew(),
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              'Login failed. Please try again.')),
+                                    );
+                                  }
+                                }
+                              },
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(context.width / 2, 50),
                           backgroundColor: primaryColor,
@@ -149,28 +151,33 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
+                        child: _isLoading
+                            ? const CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
+                              )
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.login),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Login',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ],
+                              ),
                       ),
-
                       const SizedBox(height: 20),
-
-                      IconButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return HomeScreenNew();
-                              },
-                            ));
-                          },
-                          icon: Icon(Icons.home))
-                      // Forgot Password text button
-                      // TextButton(
+                      // IconButton(
                       //   onPressed: () {
-                      //     // Navigate to your "Forgot Password" screen if needed
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //           builder: (context) => HomeScreenNew(),
+                      //         ));
                       //   },
-                      //   child: const Text(
-                      //     'Forgot Password?',
-                      //     style: TextStyle(color: Colors.white70),
-                      //   ),
+                      //   icon: const Icon(Icons.home),
                       // ),
                     ],
                   ),
@@ -184,11 +191,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   /// Builds a text field with an optional prefix icon.
-  /// If [isPassword] is true, the field will obscure text and include
-  /// an icon to toggle password visibility.
   Widget _buildTextField(String label,
       {bool isPassword = false, IconData? icon}) {
-    return TextFormField(
+    return TextFormField(controller: TextEditingController(text: isPassword?"Admin@123":"ADMIN001"),
       obscureText: isPassword ? _obscurePassword : false,
       decoration: InputDecoration(
         prefixIcon: icon != null ? Icon(icon, color: Colors.white) : null,
@@ -217,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       style: const TextStyle(color: Colors.white),
       onSaved: (value) {
-        // Save the input using a lower-case key (e.g., 'username' or 'password')
+        // Save the input using a lower-case key
         _formData[label.toLowerCase()] = value;
       },
       validator: (value) {

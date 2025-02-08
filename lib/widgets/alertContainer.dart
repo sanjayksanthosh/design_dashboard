@@ -10,7 +10,7 @@ class AlertsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      transform: Matrix4.translationValues(0, -70, 0),
+      // transform: Matrix4.translationValues(0, -70, 0),
 height: context.height/2.2,
      width: context.width * 0.18,
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),

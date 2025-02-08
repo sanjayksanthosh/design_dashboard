@@ -1,5 +1,6 @@
 // transaction_provider.dart
 import 'package:flutter/material.dart';
+import 'package:hidden_dash_new/config.dart';
 import 'package:hidden_dash_new/models/transactionModel.dart';
 import 'package:hidden_dash_new/services/transaction_services.dart';
 
@@ -12,7 +13,7 @@ class TransactionProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  final TransactionService _service = TransactionService();
+  final TransactionService _service = TransactionService(baseUrl: kApiBaseUrl);
 
   Future<void> fetchTransactions() async {
     _isLoading = true;

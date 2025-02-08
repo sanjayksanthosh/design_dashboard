@@ -31,37 +31,39 @@ class _ReportPageState extends State<ReportPage> {
         children: [
           SideBar(),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Header(),
-                  Padding(
+            // Removed the outer SingleChildScrollView so that the scroll happens only
+            // within the container below.
+            child: Stack(
+              children: [
+                Header(),
+                Center(
+                  child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Container(
                       width: context.width / 1.3,
-                      height: context.height*2,
-                      transform: Matrix4.translationValues(0, -90, 0),
-                      padding: EdgeInsets.all(30),
+                      height: context.height / 1.3,
+                      padding: const EdgeInsets.all(30),
                       decoration: BoxDecoration(
                         color: lightBlack.withOpacity(0.9),
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildReportFilter(),
-                          const SizedBox(height: 20.0),
-                  GrapghOverview(),
-
-                          Expanded(
-                            child: _buildReportTable(),
-                          ),
-                        ],
+                      // Wrap the container's content with a SingleChildScrollView.
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildReportFilter(),
+                            const SizedBox(height: 20.0),
+                            GrapghOverview(),
+                            const SizedBox(height: 20.0),
+                            _buildReportTable(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
@@ -80,41 +82,67 @@ class _ReportPageState extends State<ReportPage> {
         const SizedBox(height: 10),
         DropdownButtonFormField<String>(
           value: selectedReportType.isEmpty ? null : selectedReportType,
-          hint: const Text('Select Report Type',
-              style: TextStyle(color: Colors.white)),
+          hint: const Text(
+            'Select Report Type',
+            style: TextStyle(color: Colors.white),
+          ),
           items: [
             DropdownMenuItem(
-                value: '',
-                child:
-                    Text('Select...', style: TextStyle(color: Colors.white))),
+              value: '',
+              child: Text(
+                'Select...',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             DropdownMenuItem(
-                value: 'financial',
-                child: Text('Financial Report',
-                    style: TextStyle(color: Colors.white))),
+              value: 'financial',
+              child: Text(
+                'Financial Report',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             DropdownMenuItem(
-                value: 'lowBalance',
-                child:
-                    Text('Low Balance', style: TextStyle(color: Colors.white))),
+              value: 'lowBalance',
+              child: Text(
+                'Low Balance',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             DropdownMenuItem(
-                value: 'expiredCards',
-                child: Text('Expired Cards',
-                    style: TextStyle(color: Colors.white))),
+              value: 'expiredCards',
+              child: Text(
+                'Expired Cards',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             DropdownMenuItem(
-                value: 'whiteSummary',
-                child: Text('White Cards Summary',
-                    style: TextStyle(color: Colors.white))),
+              value: 'whiteSummary',
+              child: Text(
+                'White Cards Summary',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             DropdownMenuItem(
-                value: 'cashTransactions',
-                child: Text('Cash Transactions',
-                    style: TextStyle(color: Colors.white))),
+              value: 'cashTransactions',
+              child: Text(
+                'Cash Transactions',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             DropdownMenuItem(
-                value: 'cardTransactions',
-                child: Text('Card Transactions',
-                    style: TextStyle(color: Colors.white))),
+              value: 'cardTransactions',
+              child: Text(
+                'Card Transactions',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             DropdownMenuItem(
-                value: 'refundReport',
-                child: Text('Refund Report',
-                    style: TextStyle(color: Colors.white))),
+              value: 'refundReport',
+              child: Text(
+                'Refund Report',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ],
           onChanged: (value) {
             setState(() {
@@ -179,12 +207,17 @@ class _ReportPageState extends State<ReportPage> {
 
   Widget _buildReportTable() {
     final filteredReports = reports.where((report) {
+      // Filter reports based on the search query
       return report['type']!.toLowerCase().contains(searchQuery) ||
           report['date']!.toLowerCase().contains(searchQuery) ||
           report['amount']!.toLowerCase().contains(searchQuery);
     }).toList();
 
+    // Wrap the ListView in a way that it does not scroll on its own,
+    // so that the outer SingleChildScrollView manages scrolling.
     return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: filteredReports.length,
       itemBuilder: (context, index) {
         final report = filteredReports[index];
@@ -250,7 +283,7 @@ class _ReportPageState extends State<ReportPage> {
               ],
             ),
             const SizedBox(height: 8.0),
-            Divider(color: Colors.white54), // Divider for separation
+            const Divider(color: Colors.white54),
             const SizedBox(height: 8.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

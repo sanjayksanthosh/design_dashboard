@@ -13,169 +13,176 @@ class RechargePage extends StatelessWidget {
           SideBar(),
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
+              child: Stack(
                 children: [
                   Header(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Registration Form Container
-                        Container(
-                          width: context.width/2,
-                          padding: EdgeInsets.all(30),
-                          decoration: BoxDecoration(
-                            color: lightBlack.withOpacity(0.9),
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Recharge',
-                                style: TextStyle(
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                  Container(height: context.height,
+                  width: context.width,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Registration Form Container
+                            Container(
+                              width: context.width/2,
+                              height: context.height/1.3,
+                              padding: EdgeInsets.all(30),
+                              decoration: BoxDecoration(
+                                color: lightBlack.withOpacity(0.9),
+                                borderRadius: BorderRadius.circular(15.0),
                               ),
-                              const SizedBox(height: 20.0),
-                              // First Row
-                              Row(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Expanded(child: _buildTextField("User   ID", (value) {})),
-                                  SizedBox(width: 10),
-                                  Expanded(child: _buildTextField("Name", (value) {})),
-                                  SizedBox(width: 10),
-                                  Expanded(child: _buildTextField("Emirates ID", (value) {})),
+                                  const Text(
+                                    'Recharge',
+                                    style: TextStyle(
+                                      fontSize: 34.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20.0),
+                                  // First Row
+                                  Row(
+                                    children: [
+                                      Expanded(child: _buildTextField("User   ID", (value) {})),
+                                      SizedBox(width: 10),
+                                      Expanded(child: _buildTextField("Name", (value) {})),
+                                      SizedBox(width: 10),
+                                      Expanded(child: _buildTextField("Emirates ID", (value) {})),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  // Second Row
+                                  Row(
+                                    children: [
+                                      Expanded(child: _buildTextField("No. of Days Remaining", (value) {})),
+                                      SizedBox(width: 10),
+                                      Expanded(
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            labelText: "Date (Recharge Date)",
+                                            labelStyle: const TextStyle(color: Colors.white),
+                                            filled: true,
+                                            fillColor: const Color.fromARGB(255, 68, 68, 68).withOpacity(0.7),
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            suffixIcon: Icon(Icons.calendar_today, color: Colors.white),
+                                          ),
+                                          style: const TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Expanded(
+                                        child: DropdownButtonFormField(
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color.fromARGB(255, 68, 68, 68).withOpacity(0.7),
+                                          ),
+                                          items: [
+                                            DropdownMenuItem(
+                                              child: Text("Online Payment", style: TextStyle(color: Colors.white)),
+                                              value: "Online Payment",
+                                            ),
+                                          ],
+                                          onChanged: (value) {},
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  // Third Row
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: DropdownButtonFormField(
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color.fromARGB(255, 68, 68, 68).withOpacity(0.7),
+                                          ),
+                                          items: [
+                                            DropdownMenuItem(
+                                              child: Text("10 Days - AED 50", style: TextStyle(color: Colors.white)),
+                                              value: "10 Days - AED 50",
+                                            ),
+                                          ],
+                                          onChanged: (value) {},
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Expanded(child: _buildTextField("Remarks", (value) {})),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 20),
+                                  // Action Buttons
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: ElevatedButton.icon(
+                                          onPressed: () {},
+                                          icon: Icon(Icons.credit_card),
+                                          label: Text("Recharge"),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: primaryColor, // Use your primary color
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Expanded(
+                                        child: ElevatedButton.icon(
+                                          onPressed: () {},
+                                          icon: Icon(Icons.refresh),
+                                          label: Text("Clear"),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                             ),
                                 ],
                               ),
-                              const SizedBox(height: 10),
-                              // Second Row
-                              Row(
-                                children: [
-                                  Expanded(child: _buildTextField("No. of Days Remaining", (value) {})),
-                                  SizedBox(width: 10),
-                                  Expanded(
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        labelText: "Date (Recharge Date)",
-                                        labelStyle: const TextStyle(color: Colors.white),
-                                        filled: true,
-                                        fillColor: const Color.fromARGB(255, 68, 68, 68).withOpacity(0.7),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        suffixIcon: Icon(Icons.calendar_today, color: Colors.white),
-                                      ),
-                                      style: const TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Expanded(
-                                    child: DropdownButtonFormField(
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        filled: true,
-                                        fillColor: const Color.fromARGB(255, 68, 68, 68).withOpacity(0.7),
-                                      ),
-                                      items: [
-                                        DropdownMenuItem(
-                                          child: Text("Online Payment", style: TextStyle(color: Colors.white)),
-                                          value: "Online Payment",
-                                        ),
-                                      ],
-                                      onChanged: (value) {},
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                              // Third Row
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: DropdownButtonFormField(
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        filled: true,
-                                        fillColor: const Color.fromARGB(255, 68, 68, 68).withOpacity(0.7),
-                                      ),
-                                      items: [
-                                        DropdownMenuItem(
-                                          child: Text("10 Days - AED 50", style: TextStyle(color: Colors.white)),
-                                          value: "10 Days - AED 50",
-                                        ),
-                                      ],
-                                      onChanged: (value) {},
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Expanded(child: _buildTextField("Remarks", (value) {})),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              // Action Buttons
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ElevatedButton.icon(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.credit_card),
-                                      label: Text("Recharge"),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: primaryColor, // Use your primary color
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Expanded(
-                                    child: ElevatedButton.icon(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.refresh),
-                                      label: Text("Clear"),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                         ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(width: 20),
+                            // Recent Recharges Container
+                            // Expanded(
+                            //   flex: 4,
+                            //   child: Container(
+                            //     padding: EdgeInsets.all(30),
+                            //     decoration: BoxDecoration(
+                            //       color: lightBlack.withOpacity(0.9),
+                            //       borderRadius: BorderRadius.circular(15.0),
+                            //     ),
+                            //     child: Column(
+                            //       crossAxisAlignment: CrossAxisAlignment.start,
+                            //       children: [
+                            //         const Text(
+                            //           'Recent Recharges',
+                            //           style: TextStyle(
+                            //             fontSize: 24.0,
+                            //             fontWeight: FontWeight.bold,
+                            //             color: Colors.white,
+                            //           ),
+                            //         ),
+                            //         const SizedBox(height: 20.0),
+                            //         _buildRecentRechargesList(),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
+                          ],
                         ),
-                        const SizedBox(width: 20),
-                        // Recent Recharges Container
-                        // Expanded(
-                        //   flex: 4,
-                        //   child: Container(
-                        //     padding: EdgeInsets.all(30),
-                        //     decoration: BoxDecoration(
-                        //       color: lightBlack.withOpacity(0.9),
-                        //       borderRadius: BorderRadius.circular(15.0),
-                        //     ),
-                        //     child: Column(
-                        //       crossAxisAlignment: CrossAxisAlignment.start,
-                        //       children: [
-                        //         const Text(
-                        //           'Recent Recharges',
-                        //           style: TextStyle(
-                        //             fontSize: 24.0,
-                        //             fontWeight: FontWeight.bold,
-                        //             color: Colors.white,
-                        //           ),
-                        //         ),
-                        //         const SizedBox(height: 20.0),
-                        //         _buildRecentRechargesList(),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
