@@ -18,7 +18,6 @@ class AuthService {
         'password': password,
       }),
     );
-print(response.body);
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
